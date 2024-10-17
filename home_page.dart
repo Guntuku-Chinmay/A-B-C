@@ -10,14 +10,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String? _selectedValue;
   int _currentIndex = 0; // Define _currentIndex for BottomNavigationBar
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedValue = null;
-  }
 
   final List<Widget> _children = [
     Center(child: Text('Home Page')),
@@ -27,23 +20,66 @@ class _MyHomePageState extends State<MyHomePage> {
     Center(child: Text('Post Page')),
   ];
 
+  // Function to handle menu item selection
+  void _onMenuItemSelected(String value) {
+    switch (value) {
+      case 'settings':
+        // Handle settings action
+        print('Settings selected');
+        break;
+      case 'dark_mode':
+        // Handle dark mode action
+        print('Dark Mode selected');
+        break;
+      case 'contact_us':
+        // Handle contact us action
+        print('Contact Us selected');
+        break;
+      case 'logout':
+        // Handle log out action
+        print('Log Out selected');
+        break;
+      default:
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF007BFF),
+        title: Text('Welcome'),
         leading: IconButton(
-          icon: Icon(Icons.menu),
+          icon: Icon(Icons.person),
           onPressed: () {
-            // Add your menu button press logic here
+            // Add your profile button press logic here
+            print('Profile button pressed');
           },
         ),
-        title: Text('Welcome'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              // Add your profile button press logic here
+          PopupMenuButton<String>(
+            icon: Icon(Icons.menu),
+            onSelected: _onMenuItemSelected,
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem<String>(
+                  value: 'settings',
+                  child: Text('Settings'),
+                ),
+                PopupMenuItem<String>(
+                  value: 'dark_mode',
+                  child: Text('Dark Mode'),
+                ),
+                PopupMenuItem<String>(
+                  value: 'contact_us',
+                  child: Text('Contact Us'),
+                ),
+                PopupMenuItem<String>(
+                  value: 'logout',
+                  child: Text('Log Out'),
+                ),
+              ];
             },
           ),
         ],
