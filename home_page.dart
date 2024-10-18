@@ -49,7 +49,10 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF007BFF),
-        title: Text('Welcome'),
+        title: Text(
+          'Welcome',
+          style: TextStyle(color: Colors.white),
+        ),
         leading: IconButton(
           icon: Icon(Icons.person),
           onPressed: () {
@@ -84,7 +87,64 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: _children[_currentIndex], // Display the selected page content
+      body: Column(
+        children: [
+          // Upper row: Functional Calendar
+          Container(
+            height: 200, // Adjust height as needed
+            child: Table(
+              border: TableBorder.all(),
+              //   children: [
+              //     TableRow(
+              //       children: [
+              //         for (var day in [
+              //           'Sun',
+              //           'Mon',
+              //           'Tue',
+              //           'Wed',
+              //           'Thu',
+              //           'Fri',
+              //           'Sat'
+              //         ])
+              //           Padding(
+              //             padding: const EdgeInsets.all(8.0),
+              //             child: Center(
+              //                 child: Text(day,
+              //                     style: TextStyle(fontWeight: FontWeight.bold))),
+              //           ),
+              //       ],
+              //     ),
+              //     // Add more rows for calendar days
+              //     TableRow(
+              //       children: [
+              //         for (var i = 1; i <= 7; i++) // Example: 1-7 for a week
+              //           Padding(
+              //             padding: const EdgeInsets.all(8.0),
+              //             child: Center(child: Text('$i')),
+              //           ),
+              //       ],
+              //     ),
+              // ],
+            ),
+          ),
+          // Lower row: Various Posts
+          Expanded(
+            child: ListView.builder(
+              itemCount: 100, // Example: number of posts
+              itemBuilder: (context, index) {
+                return Card(
+                  margin: EdgeInsets.all(8.0),
+                  child: ListTile(
+                    title: Text('Post Title ${index + 1}'),
+                    subtitle:
+                        Text('This is the description of post ${index + 1}.'),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
@@ -93,6 +153,8 @@ class _MyHomePageState extends State<MyHomePage> {
             _currentIndex = index;
           });
         },
+        selectedItemColor: Color(0xFF007BFF),
+        unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
